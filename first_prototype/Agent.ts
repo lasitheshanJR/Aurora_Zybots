@@ -16,10 +16,9 @@ async function judgeAgent(input: string) {
   return object;
 }
 async function securityGateway(requestedAction: string) {
-  // 1. Send the intended action to the Security Judge AI
+  //Send the intended action to the Security Judge AI
   const report = await judgeAgent.analyze(input);
 
-  // 2. Hardcoded logic (The "Rule of Law")
   if (!report.is_approved || report.risk_score > 0.4) {
     // Quarantine the action and alert the dashboard
     await db.table('pending_reviews').insert({ 
@@ -29,7 +28,7 @@ async function securityGateway(requestedAction: string) {
     throw new Error("Security Alert: Unauthorized Action Blocked");
   }
 
-  // 3. If safe, execute the business logic
+  //If safe execute the business logic
   return executeAction(requestedAction);
 
 
